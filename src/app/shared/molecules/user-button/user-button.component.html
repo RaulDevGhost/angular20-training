@@ -1,0 +1,9 @@
+<div
+  class="user-button"
+  [class.active]="isActive$()"
+  (click)="onUserSelected()"
+>
+  <div class="user-button__info">
+    <div class="user-button__name">{{ user$().name }}</div>
+  </div>
+</div>

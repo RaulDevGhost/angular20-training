@@ -1,0 +1,13 @@
+<div class="user-card">
+  <div class="card-content">
+    <app-card [user]="user$()"></app-card>
+    <div class="footer">
+      <app-button variant="primary" size="medium" (clicked)="sendEmail()">
+        Send Email
+      </app-button>
+      <app-button variant="danger" size="medium" (clicked)="deleteUser()">
+        Delete
+      </app-button>
+    </div>
+  </div>
+</div>

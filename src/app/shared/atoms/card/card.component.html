@@ -1,0 +1,11 @@
+<div class="user-container">
+  <div class="avatar-section">
+    <div class="avatar" [innerHTML]="user$().avatar"></div>
+  </div>
+
+  <div class="user-info">
+    <h2 class="user-name">{{ user$().name }}</h2>
+    <p class="user-title">{{ user$().title }}</p>
+    <span class="user-id">ID: {{ user$().id }}</span>
+  </div>
+</div>
