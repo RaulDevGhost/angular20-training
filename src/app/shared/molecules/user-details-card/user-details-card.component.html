@@ -1,13 +1,29 @@
 <div class="user-card">
   <div class="card-content">
-    <app-card [user]="user$()"></app-card>
+    <app-card [user]="user$()!"></app-card>
     <div class="footer">
       <app-button variant="primary" size="medium" (clicked)="sendEmail()">
-        Send Email
+        Edit
       </app-button>
       <app-button variant="danger" size="medium" (clicked)="deleteUser()">
         Delete
       </app-button>
+      <!-- TEST -->
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <app-input
+          id="username"
+          name="username"
+          type="text"
+          placeholder="Enter your username"
+          [value]="username()"
+          [required]="true"
+          [errorMessage]="usernameError()"
+          (valueChange)="onUsernameChange($event)"
+          (inputBlur)="onUsernameBlur()"
+          (validationChange)="onUsernameValidation($event)"
+        />
+      </div>
     </div>
   </div>
 </div>

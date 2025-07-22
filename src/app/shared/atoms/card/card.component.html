@@ -1,11 +1,51 @@
 <div class="user-container">
-  <div class="avatar-section">
-    <div class="avatar" [innerHTML]="user$().avatar"></div>
+  <div class="user-basic-info-container">
+    <div class="avatar-section">
+      <div class="avatar" [innerHTML]="user$().avatar"></div>
+    </div>
+    <div class="user-info">
+      <h2 class="user-name">{{ user$().name }}</h2>
+      <p class="user-title">{{ user$().title }}</p>
+      <span class="user-id">ID: {{ user$().id }}</span>
+    </div>
   </div>
-
-  <div class="user-info">
-    <h2 class="user-name">{{ user$().name }}</h2>
-    <p class="user-title">{{ user$().title }}</p>
-    <span class="user-id">ID: {{ user$().id }}</span>
+  <div class="user-work-info">
+    <div class="work-info-item">
+      <span class="work-info-label">Description:</span>
+      <span class="work-info-value">{{ user$().description }}</span>
+    </div>
+    <div class="work-info-item">
+      <span class="work-info-label">Languages:</span>
+      <span class="work-info-value">{{ user$().languages }}</span>
+    </div>
+    <div class="work-info-item">
+      <span class="work-info-label">Specialist:</span>
+      <span class="work-info-value">{{ user$().specialist }}</span>
+    </div>
+    <div class="work-info-item">
+      <span class="work-info-label">Technologies:</span>
+      @for (tech of user$().technologies; track $index) {
+      <span class="work-info-value">{{ tech }}</span>
+      }
+    </div>
+    <div class="work-info-item">
+      <span class="work-info-label">Current Project:</span>
+      <span class="work-info-value"
+        >{{ user$().current_project.client }} -
+        {{ user$().current_project.title }} -
+        {{ user$().current_project.description }}</span
+      >
+    </div>
+    <div class="work-projects-container">
+      <span class="work-projects-label">Projects:</span>
+      @for (project of user$().projects; track $index) {
+      <div class="work-projects">
+        <p>{{ project.client }}</p>
+        <p>{{ project.title }}</p>
+        <p>{{ project.description }}</p>
+        <span class="work-projects-divider"></span>
+      </div>
+      }
+    </div>
   </div>
 </div>

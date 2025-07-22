@@ -1,8 +1,64 @@
 .user-container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+  min-width: 0;
+  margin: 2rem 0;
+}
+
+.user-work-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.work-info-item {
+  display: flex;
+  gap: 1rem;
+  max-width: 400px;
+  min-width: 200px;
+  padding: 0.5rem 0;
+
+  .work-info-label {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .work-info-value {
+    text-align: left;
+  }
+}
+
+.work-projects-container {
+  display: inline-block;
+
+  .work-projects-label {
+    font-size: 1rem;
+    display: flex;
+    font-weight: bold;
+  }
+
+  .work-projects {
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+  }
+
+  .work-projects-divider {
+    border: 1px solid #e2e8f0;
+  }
+}
+
+.user-basic-info-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-width: max-content;
+  padding: 2rem;
+  overflow: hidden;
+  width: 100%;
 }
 
 .avatar-section {
@@ -16,8 +72,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  background-color: #f0f8ff;
+  box-shadow: 0 4px 12px #1e293b;
+  background-color: #ffffff;
 }
 
 .avatar ::ng-deep svg {
@@ -97,7 +153,7 @@
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   .user-name {
-    color: #f1f5f9;
+    color: #1e293b;
   }
 
   .user-title {

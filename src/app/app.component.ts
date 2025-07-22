@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { UserButtonComponent } from './shared/molecules/user-button/user-button.component';
 import { DUMMY_USERS, User } from './dummy-users';
-import { CardComponent } from './shared/atoms/card/card.component';
 import { UserDetailsCardComponent } from './shared/molecules/user-details-card/user-details-card.component';
 
 @Component({

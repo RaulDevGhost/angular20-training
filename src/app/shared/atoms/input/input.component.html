@@ -1,0 +1,33 @@
+<input
+  [type]="type()"
+  [class]="inputClasses()"
+  [placeholder]="placeholder()"
+  [value]="currentValue()"
+  [name]="name()"
+  [id]="id()"
+  [autocomplete]="autocomplete()"
+  [disabled]="disabled()"
+  [readonly]="readonly()"
+  [required]="required()"
+  (input)="onInput($event)"
+  (blur)="onBlur()"
+  (focus)="onFocus()"
+/>
+
+@if (isInvalid()) {
+<div class="invalid-feedback">
+  {{ errorMessage() }}
+</div>
+} @if (touched() && isValid() && !isInvalid()) {
+<div class="valid-feedback">Looks good!</div>
+}
+
+<!-- Debug info -->
+@if (true) {
+<div class="debug-info">
+  <small>
+    Value: "{{ currentValue() }}" | Touched: {{ touched() }} | Focused:
+    {{ focused() }} | Valid: {{ isValid() }} | Invalid: {{ isInvalid() }}
+  </small>
+</div>
+}
