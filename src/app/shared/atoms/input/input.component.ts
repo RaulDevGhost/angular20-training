@@ -5,6 +5,8 @@ import {
   signal,
   computed,
   effect,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 
 @Component({
@@ -26,6 +28,9 @@ export class InputComponent {
   autofocus = input<boolean>(false);
   readonly = input<boolean>(false);
   errorMessage = input<string>('');
+  label = input<string>('');
+
+  @ViewChild('inputRef') inputRef!: ElementRef<HTMLInputElement>;
 
   // OUTPUT SIGNALS (emit to parent component)
   valueChange = output<string>();
@@ -66,6 +71,14 @@ export class InputComponent {
     };
   });
 
+  ngAfterViewInit() {
+    if (this.autofocus()) {
+      setTimeout(() => {
+        this.inputRef?.nativeElement.focus();
+      }, 0);
+    }
+  }
+
   // EFFECTS (side effects when signals change)
   constructor() {
     // Effect to sync initial value with internal value
@@ -83,19 +96,6 @@ export class InputComponent {
     effect(() => {
       const isValid = this.isValid();
       this.validationChange.emit(isValid);
-    });
-
-    // Effect to handle autofocus
-    effect(() => {
-      if (this.autofocus()) {
-        // Small delay to ensure DOM is ready
-        setTimeout(() => {
-          const inputElement = document.getElementById(this.id());
-          if (inputElement) {
-            inputElement.focus();
-          }
-        }, 0);
-      }
     });
 
     // Effect for debugging (remove in production)
@@ -140,9 +140,9 @@ export class InputComponent {
     this._focused.set(false);
   }
 
-  setValue(value: string): void {
-    this._currentValue.set(value);
-  }
+  // setValue(value: string): void {
+  //   this._currentValue.set(value);
+  // }
 
   markAsTouched(): void {
     this._touched.set(true);

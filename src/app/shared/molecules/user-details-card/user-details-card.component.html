@@ -10,12 +10,12 @@
       </app-button>
       <!-- TEST -->
       <div class="form-group">
-        <label for="username">Username:</label>
         <app-input
           id="username"
           name="username"
           type="text"
           placeholder="Enter your username"
+          [label]="'Username'"
           [value]="username()"
           [required]="true"
           [errorMessage]="usernameError()"
@@ -24,6 +24,47 @@
           (validationChange)="onUsernameValidation($event)"
         />
       </div>
+      <!-- Basic dropdown -->
+      <app-dropdown
+        label="Select Country"
+        placeholder="Choose a country"
+        [options]="countries()"
+        [value]="selectedCountry()"
+        (selectionChange)="onCountrySelected($event)"
+        [required]="true"
+        [errorMessage]="countryError()"
+      />
+
+      <!-- Searchable dropdown -->
+      <app-dropdown
+        label="Select City"
+        placeholder="Search cities..."
+        [options]="cities()"
+        [value]="selectedCity()"
+        (selectionChange)="onCitySelected($event)"
+        [searchable]="true"
+        [clearable]="true"
+      />
+
+      <!-- Multiple selection dropdown -->
+      <app-dropdown
+        label="Select Skills"
+        placeholder="Choose your skills"
+        [options]="skills()"
+        [value]="selectedSkills()"
+        (selectionChange)="onSkillsSelected($event)"
+        [multiple]="true"
+        [searchable]="true"
+        [clearable]="true"
+      />
+
+      <!-- Disabled dropdown -->
+      <app-dropdown
+        label="Disabled Dropdown"
+        placeholder="This is disabled"
+        [options]="countries()"
+        [disabled]="true"
+      />
     </div>
   </div>
 </div>

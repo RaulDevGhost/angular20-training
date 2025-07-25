@@ -3,11 +3,12 @@ import { CardComponent } from '../../atoms/card/card.component';
 import { User } from '../../../dummy-users';
 import { ButtonComponent } from '../../atoms/button/button.component';
 import { InputComponent } from '../../atoms/input/input.component';
+import { DropdownComponent } from '../../atoms/dropdown/dropdown.component';
 
 @Component({
   selector: 'app-user-details-card',
   standalone: true,
-  imports: [CardComponent, ButtonComponent, InputComponent],
+  imports: [CardComponent, ButtonComponent, InputComponent, DropdownComponent],
   templateUrl: './user-details-card.component.html',
   styleUrl: './user-details-card.component.css',
 })
@@ -109,5 +110,63 @@ export class UserDetailsCardComponent {
       });
       alert('Form submitted successfully!');
     }
+  }
+
+  //test for the dropdown component
+  selectedCountry = signal<string>('');
+  selectedCity = signal<string>('');
+  selectedSkills = signal<string[]>([]);
+  countryError = signal<string>('');
+
+  countries = signal<any[]>([
+    { value: 'us', label: 'United States' },
+    { value: 'ca', label: 'Canada' },
+    { value: 'uk', label: 'United Kingdom' },
+    { value: 'de', label: 'Germany' },
+    { value: 'fr', label: 'France' },
+    { value: 'jp', label: 'Japan', disabled: true }, // Disabled option
+  ]);
+
+  cities = signal<any[]>([
+    { value: 'ny', label: 'New York' },
+    { value: 'la', label: 'Los Angeles' },
+    { value: 'chicago', label: 'Chicago' },
+    { value: 'houston', label: 'Houston' },
+    { value: 'phoenix', label: 'Phoenix' },
+  ]);
+
+  skills = signal<any[]>([
+    { value: 'angular', label: 'Angular' },
+    { value: 'react', label: 'React' },
+    { value: 'vue', label: 'Vue.js' },
+    { value: 'typescript', label: 'TypeScript' },
+    { value: 'javascript', label: 'JavaScript' },
+    { value: 'python', label: 'Python' },
+    { value: 'java', label: 'Java' },
+  ]);
+
+  onCountrySelected(option: any | null) {
+    console.log('Selected country:', option);
+
+    if (option) {
+      this.selectedCountry.set(option.value);
+      this.countryError.set('');
+    } else {
+      this.selectedCountry.set('');
+      this.countryError.set('Please select a country');
+    }
+  }
+
+  onCitySelected(option: any | null) {
+    console.log('Selected city:', option);
+    this.selectedCity.set(option?.value || '');
+  }
+
+  onSkillsSelected(options: any | any[]) {
+    console.log('Selected skills:', options);
+
+    // Since we know this is multiple selection, cast to array
+    const skillsArray = Array.isArray(options) ? options : [options];
+    this.selectedSkills.set(skillsArray.map((option) => option.value));
   }
 }

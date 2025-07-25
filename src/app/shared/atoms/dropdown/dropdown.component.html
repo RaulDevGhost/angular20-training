@@ -1,0 +1,132 @@
+<div class="dropdown-container" #dropdownRef>
+  <!-- Label -->
+  @if (label()) {
+  <label [for]="id()" class="dropdown-label">{{ label() }}:</label>
+  }
+
+  <!-- Dropdown Button -->
+  <button
+    type="button"
+    [class]="dropdownClasses()"
+    [disabled]="disabled()"
+    [id]="id()"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-haspopup]="true"
+    [attr.aria-label]="label() || placeholder()"
+    (click)="toggleDropdown()"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+  >
+    <span class="dropdown-text">{{ displayText() }}</span>
+
+    <!-- Clear button for clearable dropdown -->
+    @if (showClearButton()) {
+    <span
+      class="clear-button"
+      (click)="$event.stopPropagation(); clearSelection()"
+      role="button"
+      tabindex="-1"
+      aria-label="Clear selection"
+    >
+      ×
+    </span>
+    }
+
+    <!-- Dropdown arrow -->
+    <span class="dropdown-arrow" [class.rotated]="isOpen()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+        <path d="M3 5l3 3 3-3H3z" />
+      </svg>
+    </span>
+  </button>
+
+  <!-- Dropdown Menu -->
+  @if (isOpen()) {
+  <div
+    class="dropdown-menu"
+    [style.max-height]="maxHeight()"
+    role="listbox"
+    [attr.aria-multiselectable]="multiple()"
+  >
+    <!-- Search Input -->
+    @if (searchable()) {
+    <div class="dropdown-search">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search options..."
+        [value]="searchTerm()"
+        (input)="onSearchInput($event)"
+        #searchInputRef
+      />
+    </div>
+    }
+
+    <!-- Options List -->
+    <div class="dropdown-options">
+      @if (filteredOptions().length === 0) {
+      <div class="dropdown-no-options">
+        @if (searchable() && searchTerm()) { No options match "{{
+          searchTerm()
+        }}" } @else { No options available }
+      </div>
+      } @else { @for (option of filteredOptions(); track option.value) {
+      <div
+        class="dropdown-option"
+        [class.selected]="isOptionSelected(option)"
+        [class.disabled]="option.disabled"
+        role="option"
+        [attr.aria-selected]="isOptionSelected(option)"
+        [attr.aria-disabled]="option.disabled"
+        (click)="selectOption(option)"
+      >
+        <!-- Checkbox for multiple selection -->
+        @if (multiple()) {
+        <span class="option-checkbox">
+          <input
+            type="checkbox"
+            [checked]="isOptionSelected(option)"
+            [disabled]="option.disabled"
+            tabindex="-1"
+          />
+        </span>
+        }
+
+        <span class="option-label">{{ option.label }}</span>
+
+        <!-- Check mark for single selection -->
+        @if (!multiple() && isOptionSelected(option)) {
+        <span class="option-check">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+            />
+          </svg>
+        </span>
+        }
+      </div>
+      } }
+    </div>
+  </div>
+  }
+
+  <!-- Validation Messages -->
+  @if (isInvalid()) {
+  <div class="invalid-feedback">
+    {{ errorMessage() }}
+  </div>
+  } @if (touched() && isValid() && !isInvalid()) {
+  <div class="valid-feedback">Looks good!</div>
+  }
+
+  <!-- Debug info -->
+  @if (true) {
+  <div class="debug-info">
+    <small>
+      Value: {{ debugValue() }} | Touched: {{ touched() }} | Focused:
+      {{ focused() }} | Open: {{ isOpen() }} | Valid: {{ isValid() }} | Invalid:
+      {{ isInvalid() }}
+    </small>
+  </div>
+  }
+</div>
