@@ -1,0 +1,38 @@
+<div class="form-wrapper" [class.loading]="isLoading()">
+  <div class="form-header" *ngIf="title()">
+    <h3>{{ title() }}</h3>
+    <p *ngIf="description()" class="form-description">{{ description() }}</p>
+  </div>
+
+  <form #formRef="ngForm" (ngSubmit)="handleSubmit()" class="wrapper-form">
+    <div class="form-content">
+      <ng-content></ng-content>
+    </div>
+
+    <div class="form-actions" *ngIf="showDefaultButtons()">
+      <button type="button" class="btn-secondary" (click)="handleCancel()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="!isFormValid() || isLoading()"
+      >
+        {{ submitText() || "Submit" }}
+      </button>
+    </div>
+  </form>
+
+  <!-- Loading overlay -->
+  <div *ngIf="isLoading()" class="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Optional debug info -->
+  <div class="debug-info" *ngIf="showDebug()">
+    <h4>Content Projection Status:</h4>
+    <p>Form Controls: {{ getProjectedElementsCount() }}</p>
+    <p>Form Valid: {{ isFormValid() }}</p>
+    <button type="button" (click)="logProjectedElements()">Log Elements</button>
+  </div>
+</div>

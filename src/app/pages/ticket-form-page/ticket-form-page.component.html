@@ -1,0 +1,129 @@
+<!-- Updated ticket-form-page.component.html -->
+<div class="ticket-container">
+  <app-form-wrapper
+    [title]="formTitle"
+    [description]="formDescription"
+    [submitText]="isEditing() ? 'Update Ticket' : 'Create Ticket'"
+    [isLoading]="isSubmitting()"
+    [showDefaultButtons]="false"
+    [showDebug]="false"
+    (onSubmit)="handleTicketSubmit($event)"
+    (onCancel)="handleCancel()"
+    (onFormChange)="handleFormChange($event)"
+  >
+    <!-- Projected form inputs with template references -->
+    <input
+      type="text"
+      name="title"
+      placeholder="Ticket Title *"
+      [(ngModel)]="ticketData.title"
+      required
+      minlength="3"
+      maxlength="100"
+      #titleInput
+    />
+
+    <textarea
+      name="description"
+      placeholder="Ticket Description *"
+      [(ngModel)]="ticketData.description"
+      required
+      minlength="10"
+      maxlength="1000"
+      rows="4"
+      #descriptionTextarea
+    ></textarea>
+
+    <select
+      name="priority"
+      [(ngModel)]="ticketData.priority"
+      required
+      #prioritySelect
+    >
+      <option value="">Select Priority</option>
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high">High</option>
+      <option value="urgent">Urgent</option>
+    </select>
+
+    <select
+      name="category"
+      [(ngModel)]="ticketData.category"
+      required
+      #categorySelect
+    >
+      <option value="">Select Category</option>
+      <option value="bug">Bug</option>
+      <option value="feature">Feature Request</option>
+      <option value="improvement">Improvement</option>
+      <option value="support">Support</option>
+    </select>
+
+    <input
+      type="text"
+      name="assignee"
+      placeholder="Assignee"
+      [(ngModel)]="ticketData.assignee"
+      #assigneeInput
+    />
+
+    <input
+      type="date"
+      name="dueDate"
+      [(ngModel)]="ticketData.dueDate"
+      [min]="minDate"
+      #dueDateInput
+    />
+
+    <!-- Custom projected buttons with template references -->
+    <button
+      type="button"
+      class="btn-secondary"
+      (click)="handleCancel()"
+      [disabled]="isSubmitting()"
+      #cancelButton
+    >
+      Cancel
+    </button>
+
+    <button
+      type="button"
+      class="btn-info"
+      (click)="saveDraft()"
+      [disabled]="isSubmitting()"
+      #saveButton
+    >
+      Save as Draft
+    </button>
+
+    <button
+      type="submit"
+      class="btn-primary"
+      [disabled]="isSubmitting()"
+      #submitButton
+    >
+      {{ isEditing() ? "Update" : "Create" }} Ticket
+    </button>
+  </app-form-wrapper>
+
+  <!-- Clean controls panel -->
+  <div class="actions-panel">
+    <button type="button" class="btn-outline" (click)="loadSampleData()">
+      Load Sample Data
+    </button>
+
+    <button
+      type="button"
+      class="btn-outline"
+      (click)="clearForm()"
+      [disabled]="isSubmitting()"
+    >
+      Clear Form
+    </button>
+
+    <button type="button" class="btn-outline" (click)="logFormStatus()">
+      Log Form Status
+    </button>
+  </div>
+</div>
